@@ -46,13 +46,47 @@ describe("App", () => {
 
   it("edits a note", async () => {
     // TODO
-  });
+    const user = userEvent.setup();
+    vi.mocked(api.listNotes).mockResolvedValue([makeNote('1', 'Milk')]);
+    vi.mocked(api.updateNote).mockResolvedValue(makeNote('1', 'Oat milk'));
+    render(<App />);
 
+    await user.click(await screen.findByRole('button', { name: 'Edit Milk' }));
+    await user.clear(screen.getByLabelText('Title'));
+    await user.type(screen.getByLabelText('Title'), 'Oat milk');
+    await user.click(screen.getByRole('button', {name: 'Save changes' }));
+
+    expect(api.updateNote).toHaveBeenCalledWith('1', {
+      title: 'Oat milk',
+      body: '',
+    });
+    expect(
+    await screen.findByRole('heading', { name: 'Oat milk' }),
+    ).toBeInTheDocument();
+  });
+  
   it("removes a deleted note from the list", async () => {
     // TODO
+    const user = userEvent.setup();
+    vi.mocked(api.listNotes).mockResolvedValue([makeNote('1', 'Milk')]);
+    vi.mocked(api.deleteNote).mockResolvedValue();
+    render(<App />)
+
+    await user.click(
+      await screen.findByRole('button', {name: 'Delete Milk' }),
+    );
+
+    expect(api.deleteNote).toHaveBeenCalledWith('1');
+    expect(await screen.findByText(/No Notes yet/)).toBeInTheDocument();
   });
 
   it("shows an error when the notes cannot be loaded", async () => {
-    // TODO
+    vi.mocked(api.listNotes).mockRejectedValue(new Error('Server is down'));
+
+    render(<App />);
+
+    expect(await screen.findByRole('alert')).toHaveTextContent(
+      'Server is down',
+    );
   });
 });
