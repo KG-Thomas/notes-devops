@@ -1,12 +1,12 @@
-import { Router } from 'express';
-import { config } from '../config';
+import { Router } from "express";
+import { config } from "../config";
 
 export function createHealthRouter(): Router {
   const router = Router();
 
-  router.get('/', (_req, res) => {
+  router.get("/", (_req, res) => {
     res.json({
-      status: 'ok',
+      status: "ok",
       version: config.version,
       uptimeSeconds: Math.round(process.uptime()),
     });

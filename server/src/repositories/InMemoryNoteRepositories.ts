@@ -1,5 +1,5 @@
-import { randomUUID } from 'node:crypto';
-import type { Note, NoteInput, NoteRepository } from './NoteRepository';
+import { randomUUID } from "node:crypto";
+import type { Note, NoteInput, NoteRepository } from "./NoteRepository";
 
 export class InMemoryNoteRepository implements NoteRepository {
   private readonly notes = new Map<string, Note>();
@@ -28,18 +28,17 @@ export class InMemoryNoteRepository implements NoteRepository {
   async update(id: string, input: NoteInput): Promise<Note | undefined> {
     const existing = this.notes.get(id);
 
-    if(!existing)
-    {
-        return undefined;
+    if (!existing) {
+      return undefined;
     }
 
     const updated: Note = {
-        ...existing,
-        title: input.title,
-        body: input.body,
-        updatedAt: new Date().toISOString(),
-        };
-    this.notes.set(id,updated);
+      ...existing,
+      title: input.title,
+      body: input.body,
+      updatedAt: new Date().toISOString(),
+    };
+    this.notes.set(id, updated);
     return updated;
 
     // TODO: return undefined if no note has this id

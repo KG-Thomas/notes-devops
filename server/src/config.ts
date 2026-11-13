@@ -1,4 +1,4 @@
-import path from 'node:path';
+import path from "node:path";
 
 export interface AppConfig {
   port: number;
@@ -10,9 +10,9 @@ export interface AppConfig {
 function loadConfig(): AppConfig {
   return {
     port: Number(process.env.PORT ?? 3000),
-    storeType: process.env.STORE_TYPE ?? 'memory',
-    publicDir: path.resolve(process.env.PUBLIC_DIR ?? 'public'),
-    version: process.env.APP_VERSION ?? 'dev',
+    storeType: process.env.STORE_TYPE ?? "memory",
+    publicDir: path.resolve(process.env.PUBLIC_DIR ?? "public"),
+    version: process.env.APP_VERSION ?? "dev",
   };
 }
 

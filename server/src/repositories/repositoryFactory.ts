@@ -1,6 +1,6 @@
-import { error } from 'console';
-import { InMemoryNoteRepository } from './InMemoryNoteRepositories';
-import type { NoteRepository } from './NoteRepository';
+import { error } from "console";
+import { InMemoryNoteRepository } from "./InMemoryNoteRepositories";
+import type { NoteRepository } from "./NoteRepository";
 
 // The only place in the back end that names a concrete repository class.
 export function createNoteRepository(storeType: string): NoteRepository {
@@ -8,13 +8,11 @@ export function createNoteRepository(storeType: string): NoteRepository {
   // TODO: 'memory' returns a new InMemoryNoteRepository
   // TODO: anything else throws an Error naming the unknown store type
 
-  switch(storeType)
-  {
-    case 'memory':
-        return new InMemoryNoteRepository();
+  switch (storeType) {
+    case "memory":
+      return new InMemoryNoteRepository();
 
-        default:
-            throw new Error('Unknown Store Type: $(storeType)')
+    default:
+      throw new Error(`Unknown Store Type: ${storeType}`);
   }
-} 
-
+}

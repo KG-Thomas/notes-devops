@@ -1,6 +1,6 @@
-import { createApp } from './app';
-import { config } from './config';
-import { createNoteRepository } from './repositories/repositoryFactory';
+import { createApp } from "./app";
+import { config } from "./config";
+import { createNoteRepository } from "./repositories/repositoryFactory";
 
 const repository = createNoteRepository(config.storeType);
 const app = createApp(repository, config.publicDir);
